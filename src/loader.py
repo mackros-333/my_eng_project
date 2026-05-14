@@ -6,6 +6,7 @@ class WebDataLoader:
     Класс для безопасной загрузки данных из интернета.
     Не падает с ошибкой, если сервер недоступен.
     """
+
     def __init__(self, base_url):
         self.base_url = base_url
 
