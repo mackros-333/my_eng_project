@@ -25,3 +25,21 @@ class WebDataLoader:
         except requests.exceptions.RequestException as e:
             print(f"Ошибка подключения: {e}")
             return dict()
+
+    def get_status(self, path):
+        """
+        Проверяет, доступен ли адрес.
+        Возвращает HTTP-статус код (200, 404, 500...).
+        Если сервер не отвечает — возвращает 0.
+        """
+        full_url = self.base_url + path
+        print(f"Проверяю статус: {full_url}")
+
+        try:
+            response = requests.head(full_url, timeout=5)
+            status = response.status_code
+            print(f"Статус: {status}")
+            return status
+        except requests.exceptions.RequestException:
+            print("Сервер не отвечает, статус: 0")
+            return 0
