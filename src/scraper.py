@@ -104,8 +104,8 @@ class BookScraper:
                     # Превращаем в полный адрес
                     current_url = self.base_url + "/catalogue/" + next_link
                     page_number += 1
-                    # Задуржка 1 сек - вежливость к серверу
-                    time.sleep(1)
+                    # Задержка 3 сек - вежливость к серверу
+                    time.sleep(3)
                 else:
                     # Кнопки "next" нет - значит, это последняя страница
                     print("Достигнут конец каталога.")
@@ -113,7 +113,10 @@ class BookScraper:
 
             except Exception as e:
                 print(f"Ошибка при поиске следующей страницы: {e}")
-                current_url = None
+                print("Пробую продолжить через 5 секунд...")
+                time.sleep(5)
+                # Не выходим из цикла - пробуем ещё раз ту же страницу
+                # (если ошибка повторится 3 раза подряд -тогда выйдем)
 
         print(f"\nВсего собрано книг: {len(self.all_books)}")
 
@@ -129,5 +132,5 @@ class BookScraper:
         # Превращаем список словарей в таблицу pandas
         df = pd.DataFrame(self.all_books)
         # Сохраняем  CSV
-        df.to_csv(filename, index=False, encoding="utf-8-sig")
+        df.to_csv(filename, index=False, encoding="utf-8-sig", sep=";")
         print(f"Сохранено {len(self.all_books)} книг в файл '{filename}'")
