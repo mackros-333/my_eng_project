@@ -58,3 +58,8 @@ class SimpleParser:
                 headers.append({"level1": level, "text": tag.get_text(strip=True)})
                 print(f"Найдено заголовков: {len(headers)}")
                 return headers
+
+    def get_books(self):
+        if not self.soup:
+            print("Сначала загрузите страницу (feth_page).")
+            return []
